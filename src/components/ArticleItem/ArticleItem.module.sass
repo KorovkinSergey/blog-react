@@ -1,0 +1,120 @@
+@import '../../sass/variables'
+
+.article
+    @include article-item
+
+.header
+    display: flex
+    justify-content: space-between
+
+.wrapper
+    display: flex
+    justify-content: flex-start
+    align-items: center
+    margin-bottom: 4px
+
+.wrapper-between
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+.title
+    font-size: 20px
+    line-height: 28px
+    color: $text-title-color
+    font-weight: 600
+    cursor: pointer
+
+.likes
+    font-size: 12px
+    line-height: 22px
+    margin-left: 13px
+    padding-left: 21px
+    position: relative
+    outline: none
+    background-color: transparent
+    border: none
+    &::before
+        content: ""
+        position: absolute
+        left: 0px
+        top: 50%
+        transform: translateY(-50%)
+        display: block
+        width: 16px
+        height: 14px
+        background: url('/img/like.svg') no-repeat center center/cover
+        cursor: pointer
+        transition: all 0.3s
+    &:active
+        &::before
+            transform: translateY(-50%) scale(1.05)
+    &:disabled
+        &::before
+            content: ""
+            position: absolute
+            left: 0px
+            top: 50%
+            transform: translateY(-50%)
+            display: block
+            width: 16px
+            height: 14px
+            background: url('/img/like.svg') no-repeat center center/cover
+            cursor: auto
+            opacity: .5
+        &:active
+            &::before
+                transform: translateY(-50%)
+
+.liked
+    &::before
+        background-image: url('/img/like2.svg')
+
+.tags>p
+    margin: 0
+    margin-right: 8px
+    display: inline-block
+    padding: 2px 6px
+    border: 1px solid $tags-border-color
+    border-radius: 2px
+    &:last-child
+        margin-bottom: 0
+
+.published
+    margin-right: 8px
+    text-align: right
+
+.name
+    font-size: 18px
+    line-height: 28px
+    font-weight: 600
+
+.date
+    font-size: 12px
+    line-height: 22px
+    color: $text-date-color
+
+.description
+    line-height: 22px
+    max-width: 80%
+    cursor: pointer
+
+.text-grey
+    color: $text-color-gray
+
+.avatar
+    width: 46px
+    height: 46px
+    border-radius: 50%
+    overflow: hidden
+    &>img
+        width: 100%
+
+.body
+    display: none
+    margin: 0
+    overflow: hidden
+    transition: all 0.3s
+
+.active
+    display: block

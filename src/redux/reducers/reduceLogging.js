@@ -1,0 +1,69 @@
+import setTokenToLocaleStorage from '../../localStorage/setTokenToLocaleStorage'
+import setUsernameToLocaleStorage from '../../localStorage/setUsernameToLocaleStorage'
+import {
+	LOG_OUT,
+	LOGIN_IS_FETCHING_OFF,
+	LOGIN_IS_FETCHING_ON,
+	SING_IN,
+	SING_IN_WITH_TOKEN,
+	SING_UP,
+	UPDATE_USER
+} from '../types'
+
+const initialState = {
+	user: {},
+	isLoggin: false,
+	isLogginFetching: false
+}
+
+function reduceLogging(state = initialState, action) {
+	switch (action.type) {
+		case LOGIN_IS_FETCHING_ON:
+			return {
+				...state,
+				isLogginFetching: true,
+			}
+		case LOGIN_IS_FETCHING_OFF:
+			return {
+				...state,
+				isLogginFetching: false,
+			}
+		case SING_UP:
+			return {
+				...action.user,
+				isLoggin: action.user.errors === undefined,
+				isLogginFetching: false,
+			}
+		case SING_IN:
+			return {
+				...action.user,
+				isLoggin: action.user.errors === undefined,
+				isLogginFetching: false,
+			}
+		case SING_IN_WITH_TOKEN:
+			return {
+				...action.user,
+				isLoggin: action.user.errors === undefined,
+				isLogginFetching: false,
+			}
+		case UPDATE_USER:
+			return {
+				...state,
+				...action.user,
+				errors: action.errors,
+				isLogginFetching: false,
+			}
+		case LOG_OUT:
+			setUsernameToLocaleStorage('')
+			setTokenToLocaleStorage('')
+			return {
+				user: {},
+				isLoggin: false,
+				isLogginFetching: false,
+			}
+		default:
+			return state
+	}
+}
+
+export default reduceLogging

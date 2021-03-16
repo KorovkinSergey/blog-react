@@ -1,0 +1,41 @@
+@import '../../sass/variables.sass'
+
+.header
+    min-height: 80px
+    width: 100%
+    background-color: $header-background
+    padding: 16px 22px
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+.wrapper
+    display: flex
+    justify-content: flex-end
+    align-items: center
+
+.title
+    font-size: 18px
+    line-height: 28px
+    color: $text-color-black
+
+.button
+    margin-right: 20px
+    &:last-child
+        margin: 0
+
+.username
+    font-size: 18px
+    line-height: 28px
+    color: $text-color-black
+    margin-right: 13px
+
+.avatar
+    width: 46px
+    height: 46px
+    border-radius: 50%
+    margin-right: 27px
+    overflow: hidden
+    cursor: pointer
+    &>img
+        width: 100%

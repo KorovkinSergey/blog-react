@@ -1,0 +1,85 @@
+@import '../../sass/variables'
+
+.form
+    display: block
+    margin: 0 auto
+    padding: 48px 32px
+    background-color: $header-background
+    max-width: 384px
+    border-radius: 5px
+    box-shadow: $shadow
+
+.title
+    text-align: center
+    font-weight: 500
+    font-size: 20px
+    line-height: 28px
+    color: $text-color-black
+    margin-bottom: 21px
+
+.input
+    border: 1px solid #D9D9D9
+    border-radius: 4px
+    padding: 8px 12px
+    font-weight: 400
+    font-size: 16px
+    line-height: 24px
+    color: $text-color-gray-placeholder
+    margin-bottom: 12px
+    width: 100%
+    &:last-of-type
+        margin-bottom: 21px
+    &-title
+        font-size: 14px
+        line-height: 22px
+        color: $text-color-black
+        text-align: left
+        margin-bottom: 2px
+    &-invalid
+        outline: none
+        border: 2px solid red
+
+.checkbox-label
+    width: 100%
+    position: relative
+    &>p
+        padding-left: 24px
+        font-weight: normal
+        font-size: 14px
+        line-height: 22px
+        color: $text-color-checkbox
+
+.checkbox
+    position: absolute
+    top: 24px
+    left: 8px
+    width: 1px
+    height: 1px
+    margin: -1px
+    border: 0
+    padding: 0
+    clip: rect(0 0 0 0)
+    overflow: hidden
+
+.custom-checkbox
+    position: absolute
+    top: 6px
+    width: 16px
+    height: 16px
+    border: 2px solid $text-color-gray-placeholder
+    border-radius: 2px
+
+.checkbox:checked ~ .custom-checkbox
+    display: block
+    background-color: #1890FF
+    background-image: url('/img/check.svg')
+    background-position: 50% 50%
+    background-repeat: no-repeat
+    border: 1px solid #1890FF
+
+.sing-up
+    color: $text-color-sing-in
+    text-align: center
+
+.error
+    color: #ff0000
