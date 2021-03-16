@@ -26,8 +26,6 @@ function App({getArticles, getMyArticles, singInWithToken, isLoggin}) {
 
 	if (token) singInWithToken()
 
-
-
 	return (
 		<Router>
 			<Header/>
@@ -63,11 +61,11 @@ function App({getArticles, getMyArticles, singInWithToken, isLoggin}) {
 					/>
 					<Route exact path="/sing-up" component={RegistrationForm}/>
 
-					<PrivateRoute exact path="/new-article" render={() =>{
-						if (isLoggin === false && token === '') {
-							return <Redirect to="/sing-in"/>
-						}
-					 return <NewArticle />}}/>
+					<PrivateRoute exact path="/new-article" render={() => {
+						if (isLoggin === false && token === '') return <Redirect to="/sing-in"/>
+
+						return <NewArticle/>
+					}}/>
 
 					<PrivateRoute Component={Profile} path="/profile"/>
 
@@ -79,7 +77,6 @@ function App({getArticles, getMyArticles, singInWithToken, isLoggin}) {
 							return <EditArticle id={id}/>
 						}}
 					/>
-
 
 					<Route render={() => <ErrorMessage description="404: there is no page on this URL :("/>}/>
 				</Switch>

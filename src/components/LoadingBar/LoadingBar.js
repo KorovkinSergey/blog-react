@@ -1,28 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { Spin } from 'antd';
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import {Spin} from 'antd'
 
-import classes from './LoadingBar.module.sass';
+import classes from './LoadingBar.module.sass'
 
-function LoadingBar({ small, transparent }) {
-  const size = small ? 'small' : 'large';
+function LoadingBar({small, transparent}) {
+	const size = small ? 'small' : 'large'
 
-  return (
-    <div className={classNames(classes.loading, transparent ? classes.transparent : null)}>
-      <Spin size={size} />
-    </div>
-  );
+	return (
+		<div className={classNames(classes.loading, transparent ? classes.transparent : null)}>
+			<Spin size={size}/>
+		</div>
+	)
 }
 
 LoadingBar.propTypes = {
-  small: PropTypes.bool,
-  transparent: PropTypes.bool,
-};
+	small: PropTypes.bool,
+	transparent: PropTypes.bool,
+}
 
 LoadingBar.defaultProps = {
-  small: false,
-  transparent: false,
-};
+	small: false,
+	transparent: false,
+}
 
-export default LoadingBar;
+export default LoadingBar

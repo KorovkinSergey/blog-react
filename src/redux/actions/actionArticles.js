@@ -30,6 +30,7 @@ export const clearJustCreateArticle = () => ({type: CLEAR_JUST_NEW_ARTICLE})
 
 export function getMyArticles(offset) {
 	return async dispatch => {
+		dispatch(isFetchingOn())
 		try {
 			const result = await realWorldService.getMyArticles(offset)
 			const action = {
@@ -38,6 +39,7 @@ export function getMyArticles(offset) {
 				totalCount: result.articlesCount
 			}
 			dispatch(action)
+			dispatch(isFetchingOff())
 		} catch (e) {
 			dispatch(isFetchingOff())
 

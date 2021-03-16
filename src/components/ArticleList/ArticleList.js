@@ -34,7 +34,6 @@ function ArticleList({articles, isFetching, articlesCount, page}) {
 		</li>
 	)
 
-
 	return (
 		<>
 			<ul className={classes.ul}>{articles.map((article) => renderArticle(article))}</ul>
@@ -42,7 +41,6 @@ function ArticleList({articles, isFetching, articlesCount, page}) {
 		</>
 	)
 }
-
 
 ArticleList.propTypes = {
 	articles: PropTypes.array.isRequired,
@@ -62,4 +60,4 @@ const mapStateToProps = state => ({
 	articlesCount: state.articles.totalCount,
 })
 
-export default  connect(mapStateToProps, null)(ArticleList)
+export default connect(mapStateToProps, null)(ArticleList)

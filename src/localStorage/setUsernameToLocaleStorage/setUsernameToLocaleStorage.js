@@ -1,5 +1,5 @@
 function setUsernameToLocaleStorage(username) {
-  window.localStorage.setItem('username', username);
+  window.localStorage.setItem('username', username)
 }
 
-export default setUsernameToLocaleStorage;
+export default setUsernameToLocaleStorage

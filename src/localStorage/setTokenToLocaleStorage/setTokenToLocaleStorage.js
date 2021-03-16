@@ -1,5 +1,5 @@
 function setTokenToLocaleStorage(token) {
-  window.localStorage.setItem('token', token);
+  window.localStorage.setItem('token', token)
 }
 
-export default setTokenToLocaleStorage;
+export default setTokenToLocaleStorage

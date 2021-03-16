@@ -2,18 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classes from './FormErrorMessage.module.sass'
 
-function FormErrorMessage({ serverError }) {
-  if (!serverError) return null
+function FormErrorMessage({serverError}) {
+	if (!serverError) return null
 
-  return <span className={classes.error}>{serverError}</span>
+	return <span className={classes.error}>{serverError}</span>
 }
 
 FormErrorMessage.propTypes = {
-  serverError: PropTypes.string,
+	serverError: PropTypes.string,
 }
 
 FormErrorMessage.defaultProps = {
-  serverError: '',
+	serverError: '',
 }
 
 export default FormErrorMessage

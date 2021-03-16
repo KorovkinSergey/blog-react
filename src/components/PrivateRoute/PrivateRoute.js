@@ -1,12 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
- import {Route} from 'react-router-dom'
+import {Route} from 'react-router-dom'
 
 
 function PrivateRoute({Component, render, ...rest}) {
-
-	// const token = getTokenFromLocaleStorage()
-	// if (isLoggin === false && token === '') return <Redirect to="/sing-in"/>
 
 	if (Component !== false) return <Route {...rest} component={Component}/>
 
@@ -24,7 +21,6 @@ PrivateRoute.defaultProps = {
 	render: () => {
 	},
 }
-
 
 
 export default PrivateRoute
