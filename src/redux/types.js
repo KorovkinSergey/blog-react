@@ -1,7 +1,6 @@
 export const IS_FETCHING_ON = 'IS_FETCHING_ON'
 export const IS_FETCHING_OFF = 'IS_FETCHING_OFF'
 export const GET_ARTICLES = 'GET_ARTICLES'
-export const GET_MY_ARTICLES = 'GET_MY_ARTICLES'
 export const GET_ONE_ARTICLE = 'GET_ONE_ARTICLE'
 export const CHANGE_PAGE = 'CHANGE_PAGE'
 export const ERROR = 'ERROR'

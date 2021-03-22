@@ -13,7 +13,13 @@ import {
 const initialState = {
 	user: {},
 	isLoggin: false,
-	isLogginFetching: false
+	isLogginFetching: false,
+	errors: {
+		email: [''],
+		password: [''],
+		username: ['']
+	}
+
 }
 
 function reduceLogging(state = initialState, action) {
@@ -36,6 +42,7 @@ function reduceLogging(state = initialState, action) {
 			}
 		case SING_IN:
 			return {
+				...state,
 				...action.user,
 				isLoggin: action.user.errors === undefined,
 				isLogginFetching: false,

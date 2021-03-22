@@ -27,6 +27,7 @@ function ArticleItemWithService({articles, id, getArticleById, isFetching, error
 				id={slug}
 				logginUsername={logginUsername}
 				favorited={favorited}
+				edit
 			/>
 		)
 	}

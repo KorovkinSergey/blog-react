@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import PrivateRoute from './components/PrivateRoute'
 import pageSize from './components/Pagination/pageSize'
-import {getArticles, getMyArticles} from './redux/actions/actionArticles'
+import {getArticles} from './redux/actions/actionArticles'
 import {singInWithToken} from './redux/actions/actionLogin'
 
 import Main from './components/Main'
@@ -20,7 +20,7 @@ import NewArticle from './components/NewArticle'
 import EditArticle from './components/EditArticle'
 
 
-function App({getArticles, getMyArticles, singInWithToken, isLoggin}) {
+function App({getArticles, singInWithToken, isLoggin}) {
 
 	const token = getTokenFromLocaleStorage()
 
@@ -41,14 +41,6 @@ function App({getArticles, getMyArticles, singInWithToken, isLoggin}) {
 							const offset = (page - 1) * pageSize
 							getArticles(offset)
 							return <ArticleList page={page}/>
-						}}
-					/>
-					<PrivateRoute
-						path="/my-articles"
-						exact
-						render={() => {
-							getMyArticles()
-							return <ArticleList page={1}/>
 						}}
 					/>
 					<Route
@@ -87,7 +79,6 @@ function App({getArticles, getMyArticles, singInWithToken, isLoggin}) {
 
 App.propTypes = {
 	getArticles: PropTypes.func.isRequired,
-	getMyArticles: PropTypes.func.isRequired,
 	singInWithToken: PropTypes.func.isRequired,
 	isLoggin: PropTypes.bool
 }
@@ -102,7 +93,6 @@ const mapStateToProps = (state) => ({
 
 const dispatchToProps = (dispatch) => ({
 	getArticles: offset => dispatch(getArticles(offset)),
-	getMyArticles: offset => dispatch(getMyArticles(offset)),
 	singInWithToken: () => dispatch(singInWithToken()),
 })
 

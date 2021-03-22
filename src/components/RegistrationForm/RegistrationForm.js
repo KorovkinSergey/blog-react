@@ -5,60 +5,34 @@ import {useForm} from 'react-hook-form'
 import {Link} from 'react-router-dom'
 import {withRouter} from 'react-router'
 import Button from '../Button'
-import {Input, Checkbox} from '../formInputs'
+import {Input} from '../formInputs'
 
 import classes from './RegistrationForm.module.sass'
 import {singUp} from '../../redux/actions/actionLogin'
+import FormErrorMessage from '../FormErrorMessage'
 
 function RegistrationForm({singUp, usernameError, emailError, passwordError, isFetching, isLoggin, history}) {
-	const [emailInput, setEmailInput] = useState('')
-	const [emailErrorMessage, setEmailErrorMessage] = useState('')
 
 	const [usernameInput, setUsernameInput] = useState('')
-	const [usernameErrorMessage, setUsernameErrorMessage] = useState('')
-
+	const [emailInput, setEmailInput] = useState('')
 	const [passwordInput, setPasswordInput] = useState('')
-	const [passwordErrorMessage, setPasswordErrorMessage] = useState('')
-
 	const [confirmPasswordInput, setConfirmPasswordInput] = useState('')
-	const [confirmPasswordInputErrorMessage, setConfirmPasswordInputErrorMessage] = useState('')
+	const [confirmError, setConfirmError] = useState('')
 
-	const {register, handleSubmit} = useForm()
+	const {register, handleSubmit, errors} = useForm()
+
+	const reg = /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:com|coop|edu|gov|info|ru|jobs|mil|mobi|museum|name|net|[a-z][a-z])$/
 
 	if (isLoggin) history.push('/articles/page/1')
 
-
 	const onSubmit = (data) => {
-		const isEmail = emailInput.includes('@', 0)
-		if (isEmail === false) {
-			setEmailErrorMessage('email should contain "@"')
-			return
-		}
-		if (isEmail === true) setEmailErrorMessage('')
 
-		const validUserName = usernameInput.length > 2 && usernameInput.length < 21
-		if (validUserName === false) {
-			setUsernameErrorMessage('username should be from 3 to 20 letters')
-			return
-		}
-		if (validUserName === true) setUsernameErrorMessage('')
-
-
-		const isPasswordValid = passwordInput.length > 7 && passwordInput.length < 41
-		if (isPasswordValid === false) {
-			setPasswordErrorMessage('password must be from 8 to 40 letters')
+		if (passwordInput !== confirmPasswordInput) {
+			setConfirmError('passwords are not match')
 			return
 		}
 
-		if (isPasswordValid === true) setPasswordErrorMessage('')
-
-
-		const confirmPassword = passwordInput === confirmPasswordInput
-		if (confirmPassword === false) {
-			setConfirmPasswordInputErrorMessage('passwords are not match')
-			return
-		}
-		if (confirmPassword === true) setConfirmPasswordInputErrorMessage('')
+		setConfirmError('')
 
 		const newUserObj = {
 			username: data.username,
@@ -81,9 +55,10 @@ function RegistrationForm({singUp, usernameError, emailError, passwordError, isF
 				required
 				placeholder="Username"
 				onInput={setUsernameInput}
-				errorMessage={usernameError || usernameErrorMessage}
-				ref={register}
+				errorMessage={usernameError}
+				ref={register({required: true, minLength: 3, maxLength: 20})}
 			/>
+			{errors.username && <FormErrorMessage serverError="username should be from 3 to 20 letters"/>}
 
 			<div className={classes['input-title']}>Email address</div>
 			<Input
@@ -91,39 +66,41 @@ function RegistrationForm({singUp, usernameError, emailError, passwordError, isF
 				type="email"
 				minLength="3"
 				placeholder="Email"
-				ref={register}
+				ref={register({required: true, pattern: reg})}
 				required
 				value={emailInput}
-				errorMessage={emailError || emailErrorMessage}
+				errorMessage={emailError}
 				onInput={setEmailInput}
 			/>
+			{errors.email && <FormErrorMessage serverError="Error email"/>}
+
 			<div className={classes['input-title']}>Password</div>
 			<Input
 				name="password"
 				type="password"
-				minLength="8"
-				maxLength="40"
+				minLength="6"
+				maxLength="20"
 				placeholder="Password"
 				value={passwordInput}
-				errorMessage={passwordError || passwordErrorMessage}
+				errorMessage={passwordError}
 				onInput={setPasswordInput}
 				required
-				ref={register}
+				ref={register({required: true, minLength: 6, maxLength: 20})}
 			/>
+			{errors.password && <FormErrorMessage serverError="password must be from 6 to 20 letters"/>}
+
 			<div className={classes['input-title']}>Confirm password</div>
 			<Input
-				name="confirm password"
+				name="confirm"
 				type="password"
-				minLength="8"
-				maxLength="40"
+				minLength="6"
+				maxLength="20"
 				placeholder="Confirm password"
 				value={confirmPasswordInput}
-				errorMessage={confirmPasswordInputErrorMessage}
 				onInput={setConfirmPasswordInput}
-				required
+				ref={register({required: true, minLength: 6, maxLength: 20})}
 			/>
-			<hr/>
-			<Checkbox description="I agree to the processing of my personal information" required/>
+			{confirmError && <FormErrorMessage serverError={confirmError}/>}
 
 			<Button submit style={['wide', 'blue', 'margin-bottom']} disabled={isFetching} loading={isFetching}>
 				Create
@@ -152,20 +129,13 @@ RegistrationForm.defaultProps = {
 	isLoggin: false,
 }
 
-const mapStateToProps = (state) => {
-	const {user} = state
-	const props = {
-		isFetching: state.user.isLogginFetching,
-		isLoggin: user.isLoggin,
-	}
-	if (user.errors) {
-		if (user.errors.username) props.usernameError = '' || user.errors.username[0]
-		if (user.errors.email) props.emailError = '' || user.errors.email[0]
-		if (user.errors.password) props.passwordError = '' || user.errors.password[0]
-	}
-
-	return props
-}
+const mapStateToProps = (state) => ({
+	isFetching: state.user.isLogginFetching,
+	isLoggin: state.user.isLoggin,
+	usernameError: state.user.errors.username[0],
+	emailError: state.user.errors.email[0],
+	passwordError: state.user.errors.password[0]
+})
 
 const mapDispatchToProps = (dispatch) => ({
 	singUp: (user) => dispatch(singUp(user))

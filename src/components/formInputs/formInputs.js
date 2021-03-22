@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
-import FormErrorMessage from '../FormErrorMessage';
-import Button from '../Button';
+import FormErrorMessage from '../FormErrorMessage'
+import Button from '../Button'
 
-import classes from './formInputs.module.sass';
+import classes from './formInputs.module.sass'
 
 const Input = React.forwardRef(
 	({value, type, minLength, maxLength, placeholder, required, errorMessage, name, onInput}, ref) => (
@@ -19,15 +19,13 @@ const Input = React.forwardRef(
 				className={classNames(classes.input, errorMessage ? classes['input-invalid'] : null)}
 				placeholder={placeholder}
 				ref={ref}
-				onInput={(e) => {
-					onInput(e.target.value);
-				}}
+				onInput={e => onInput(e.target.value)}
 				value={value}
 			/>
 			{errorMessage && <FormErrorMessage serverError={errorMessage}/>}
 		</>
 	)
-);
+)
 
 Input.propTypes = {
 	placeholder: PropTypes.string,
@@ -39,7 +37,7 @@ Input.propTypes = {
 	minLength: PropTypes.string,
 	maxLength: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 	onInput: PropTypes.func.isRequired,
-};
+}
 
 Input.defaultProps = {
 	placeholder: 'text',
@@ -49,7 +47,7 @@ Input.defaultProps = {
 	type: 'text',
 	minLength: 0,
 	maxLength: null,
-};
+}
 
 const TextArea = React.forwardRef(
 	({value, minLength, maxLength, placeholder, required, errorMessage, name, onInput}, ref) => (
@@ -64,14 +62,14 @@ const TextArea = React.forwardRef(
 				placeholder={placeholder}
 				ref={ref}
 				onInput={(e) => {
-					onInput(e.target.value);
+					onInput(e.target.value)
 				}}
 				value={value}
 			/>
 			{errorMessage && <FormErrorMessage serverError={errorMessage}/>}
 		</>
 	)
-);
+)
 
 TextArea.propTypes = {
 	placeholder: PropTypes.string,
@@ -82,7 +80,7 @@ TextArea.propTypes = {
 	minLength: PropTypes.string,
 	maxLength: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 	onInput: PropTypes.func.isRequired,
-};
+}
 
 TextArea.defaultProps = {
 	placeholder: 'text',
@@ -91,7 +89,7 @@ TextArea.defaultProps = {
 	value: '',
 	minLength: 0,
 	maxLength: null,
-};
+}
 
 const TagInput = ({value, onAdd, onInput, errorMessage}) => (
 	<div className={classes['tag-wrapper']}>
@@ -103,13 +101,13 @@ const TagInput = ({value, onAdd, onInput, errorMessage}) => (
 				className={classNames(classes.input, classes['input-tag'])}
 				placeholder="Tag"
 				onInput={(e) => {
-					onInput(e.target.value);
+					onInput(e.target.value)
 				}}
 				value={value}
 				onKeyDown={(e) => {
 					if (e.code === 'Enter') {
-						e.preventDefault();
-						onAdd();
+						e.preventDefault()
+						onAdd()
 					}
 				}}
 			/>
@@ -119,19 +117,19 @@ const TagInput = ({value, onAdd, onInput, errorMessage}) => (
 			Add tag
 		</Button>
 	</div>
-);
+)
 
 TagInput.propTypes = {
 	onAdd: PropTypes.func.isRequired,
 	value: PropTypes.string,
 	onInput: PropTypes.func.isRequired,
 	errorMessage: PropTypes.string,
-};
+}
 
 TagInput.defaultProps = {
 	value: '',
 	errorMessage: '',
-};
+}
 
 const Checkbox = React.forwardRef(({description, required}, ref) => (
 	<label className={classes['checkbox-label']}>
@@ -139,15 +137,15 @@ const Checkbox = React.forwardRef(({description, required}, ref) => (
 		<div className={classes['custom-checkbox']}/>
 		<p>{description}</p>
 	</label>
-));
+))
 
 Checkbox.propTypes = {
 	description: PropTypes.string.isRequired,
 	required: PropTypes.bool,
-};
+}
 
 Checkbox.defaultProps = {
 	required: false,
-};
+}
 
-export {Checkbox, TextArea, TagInput, Input};
+export {Checkbox, TextArea, TagInput, Input}

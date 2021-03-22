@@ -1,6 +1,5 @@
 import setTokenToLocaleStorage from '../../localStorage/setTokenToLocaleStorage'
 import getTokenFromLocaleStorage from '../../localStorage/getTokenFromLocaleStorage'
-import getUsernameFromLocaleSorage from '../../localStorage/getUsernameFromLocaleSorage'
 import setUsernameToLocaleStorage from '../../localStorage/setUsernameToLocaleStorage'
 
 class RealWorldService {
@@ -192,17 +191,6 @@ class RealWorldService {
 		return this.likeArticle(id, true)
 	}
 
-	async getMyArticles(offset) {
-		let username = 'none'
-		const usernameFromLocaleStorage = getUsernameFromLocaleSorage()
-		if (usernameFromLocaleStorage !== '') username = usernameFromLocaleStorage
-		if (this.username !== '') username = this.username
-		let result = {articles: []}
-		if (username) {
-			result = await this.getArticles(offset, username)
-		}
-		return result
-	}
 }
 
 export default new RealWorldService()

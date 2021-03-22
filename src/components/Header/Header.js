@@ -26,9 +26,6 @@ function Header({isLoggin, userName, imgUrl, logOut}) {
 			<div className={classes.wrapper}>
 				{isLoggin && (
 					<>
-						<Link to="/my-articles">
-							<Button style={['outlined', 'blue', 'text-blue', 'small', 'margin-right']}>My articles</Button>
-						</Link>
 						<Link to="/new-article">
 							<Button style={['outlined', 'green', 'small', 'margin-right']}>Create article</Button>
 						</Link>

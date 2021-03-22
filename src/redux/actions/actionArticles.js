@@ -1,6 +1,6 @@
 import realWorldService from '../../API/RealWorldService'
 import {isFetchingOff, isFetchingOn} from './actionFetching'
-import {CLEAR_JUST_NEW_ARTICLE, DELETE_ARTICLE, ERROR, GET_ARTICLES, GET_MY_ARTICLES, UPDATE_ARTICLE} from '../types'
+import {CLEAR_JUST_NEW_ARTICLE, DELETE_ARTICLE, ERROR, GET_ARTICLES, GET_ONE_ARTICLE, UPDATE_ARTICLE} from '../types'
 import {setLogginError} from './actionErrors'
 
 export function getArticles(offset) {
@@ -28,27 +28,6 @@ export function getArticles(offset) {
 
 export const clearJustCreateArticle = () => ({type: CLEAR_JUST_NEW_ARTICLE})
 
-export function getMyArticles(offset) {
-	return async dispatch => {
-		dispatch(isFetchingOn())
-		try {
-			const result = await realWorldService.getMyArticles(offset)
-			const action = {
-				type: GET_ARTICLES,
-				articles: result.articles,
-				totalCount: result.articlesCount
-			}
-			dispatch(action)
-			dispatch(isFetchingOff())
-		} catch (e) {
-			dispatch(isFetchingOff())
-
-			dispatch(setLogginError(e.message))
-		}
-
-	}
-}
-
 export function getOneArticle(id) {
 	return async dispatch => {
 		dispatch(isFetchingOn())
@@ -56,7 +35,7 @@ export function getOneArticle(id) {
 		try {
 			const result = await realWorldService.getOneArticle(id)
 			const action = {
-				type: GET_MY_ARTICLES,
+				type: GET_ONE_ARTICLE,
 				articles: [result.article],
 				totalCount: 1,
 			}

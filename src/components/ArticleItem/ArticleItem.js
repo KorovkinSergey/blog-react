@@ -9,12 +9,11 @@ import classNames from 'classnames'
 import {Popconfirm /* message */} from 'antd'
 
 import realWorldService from '../../API/RealWorldService'
-
 import Button from '../Button'
+
 import TagsBar from '../TagsBar'
 
 import classes from './ArticleItem.module.sass'
-
 import avatar from '../../img/avatar.png'
 import {deleteArticle} from '../../redux/actions/actionArticles'
 
@@ -34,6 +33,7 @@ function ArticleItem({
 											 favorited,
 											 deleteOneArticle,
 											 isLoggin,
+											 edit
 										 }) {
 	const [isActive, setActive] = useState(false)
 	const [isLiked, setLiked] = useState(favorited)
@@ -118,7 +118,7 @@ function ArticleItem({
 				>
 					{description}
 				</div>
-				{username === logginUsername && (
+				{username === logginUsername && edit && (
 					<div className={classes.wrapper}>
 						<Popconfirm placement="rightTop" title={text} onConfirm={confirm} okText="Yes" cancelText="No">
 							<Button style={['outlined', 'red']}>Delete</Button>
@@ -151,6 +151,7 @@ ArticleItem.propTypes = {
 	deleteOneArticle: PropTypes.func.isRequired,
 	isLoggin: PropTypes.bool.isRequired,
 	favorited: PropTypes.bool.isRequired,
+	edit:PropTypes.bool
 }
 
 ArticleItem.defaultProps = {
@@ -164,6 +165,7 @@ ArticleItem.defaultProps = {
 	body: 'body',
 	id: 'id',
 	logginUsername: '',
+	edit:false
 }
 
 const mapStateToProps = (state) => ({

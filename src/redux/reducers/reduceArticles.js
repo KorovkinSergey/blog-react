@@ -2,7 +2,6 @@ import {
 	CLEAR_JUST_NEW_ARTICLE,
 	CREATE_NEW_ARTICLE, DELETE_ARTICLE,
 	GET_ARTICLES,
-	GET_MY_ARTICLES,
 	GET_ONE_ARTICLE,
 	UPDATE_ARTICLE
 } from '../types'
@@ -17,8 +16,6 @@ function reduceArticles(state = initialState, action) {
 	switch (action.type) {
 		case GET_ARTICLES:
 			return {...state, articles: action.articles, totalCount: action.totalCount}
-		case GET_MY_ARTICLES:
-			return {...state, articles: [...action.articles], totalCount: action.totalCount}
 		case GET_ONE_ARTICLE:
 			return {...state, articles: [...state.articles, {...action.articles}], totalCount: action.totalCount}
 		case CREATE_NEW_ARTICLE:

@@ -4,10 +4,10 @@ import {connect} from 'react-redux'
 
 import ArticleItem from '../ArticleItem'
 import Pagination from '../Pagination'
+
 import LoadingBar from '../LoadingBar'
 
 import classes from './ArticleList.module.sass'
-
 import pageSize from '../Pagination/pageSize'
 
 function ArticleList({articles, isFetching, articlesCount, page}) {
@@ -15,6 +15,8 @@ function ArticleList({articles, isFetching, articlesCount, page}) {
 	if (isFetching) return <LoadingBar/>
 
 	if (!articles.length && !isFetching) return <div>No data :((</div>
+
+
 
 	const renderArticle = ({title, favoritesCount, tagList, author, updatedAt, description, slug, body, favorited}) => (
 		<li className={classes.li} key={slug}>

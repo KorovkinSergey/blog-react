@@ -10,8 +10,9 @@ import TagsBar from '../TagsBar'
 
 import classes from './NewArticle.module.sass'
 import {clearJustCreateArticle, createArticle, updateArticle} from '../../redux/actions/actionArticles'
+import FormErrorMessage from '../FormErrorMessage'
 
-// let tagsCount = 1
+
 
 function NewArticle({
 											id,
@@ -27,18 +28,17 @@ function NewArticle({
 											history,
 											articleTagList,
 										}) {
-	const {register, handleSubmit} = useForm()
+
+	const {register, handleSubmit, errors} = useForm()
 
 	const [inputTitle, setInputTitle] = useState(articleTitle)
-	const [errorMessageTitle, setErrorMessageTitle] = useState('')
 
 	const [inputDescription, setInputDescription] = useState(articleDescription)
-	const [errorMessageDescription, setErrorMessageDescriptio] = useState('')
 
 	const [inputBody, setInputBody] = useState(articleBody)
-	const [errorMessageBody, setErrorMessageBody] = useState('')
 
 	const [inputTag, setInputTag] = useState('')
+
 	const [tagError, setTagError] = useState('')
 
 	const [tagsArr, setTagsArr] = useState([...articleTagList])
@@ -63,28 +63,7 @@ function NewArticle({
 		setTagsArr(tagsArr.filter((item) => item !== tag))
 	}
 
-	const onSubmit = (data) => {
-		if (inputTitle.length < 4) {
-			setErrorMessageTitle('title must be longer than 3 letters')
-			return
-		}
-		if (inputTitle.length >= 4) {
-			setErrorMessageTitle('')
-		}
-		if (inputDescription.length < 4) {
-			setErrorMessageDescriptio('description must be longer that 3 letters')
-			return
-		}
-		if (inputDescription.length >= 4) {
-			setErrorMessageDescriptio('')
-		}
-		if (inputBody.length < 4) {
-			setErrorMessageBody('article must be longer that 3 letters')
-			return
-		}
-		if (inputBody.length >= 4) {
-			setErrorMessageBody('')
-		}
+	const onSubmit = async (data) => {
 
 		const newArticle = {
 			title: data.title,
@@ -92,12 +71,13 @@ function NewArticle({
 			body: data.body,
 			tagList: tagsArr,
 		}
-
 		if (id !== '') {
 			updateArticle(newArticle, id)
 			return
 		}
-		createArticle(newArticle)
+		await createArticle(newArticle)
+
+		history.push('/articles/page/1')
 	}
 
 	return (
@@ -111,10 +91,11 @@ function NewArticle({
 				value={inputTitle}
 				type="text"
 				minLength="0"
-				errorMessage={errorMessageTitle}
 				onInput={setInputTitle}
-				ref={register}
+				ref={register({required: true, minLength:3})}
 			/>
+			{errors.title && <FormErrorMessage serverError="title must be longer than 3 letters"/>}
+
 			<div className={classes['input-title']}>Short description</div>
 			<Input
 				name="description"
@@ -123,21 +104,23 @@ function NewArticle({
 				value={inputDescription}
 				type="text"
 				minLength="0"
-				errorMessage={errorMessageDescription}
 				onInput={setInputDescription}
-				ref={register}
+				ref={register({required: true, minLength:3})}
 			/>
+			{errors.description && <FormErrorMessage serverError="description must be longer that 3 letters"/>}
+
 			<div className={classes['input-title']}>Text</div>
 			<TextArea
 				name="body"
 				placeholder="Text"
 				required
-				ref={register}
+				ref={register({required: true, minLength:3})}
 				value={inputBody}
 				minLength="1"
-				errorMessage={errorMessageBody}
 				onInput={setInputBody}
 			/>
+			{errors.body && <FormErrorMessage serverError="article must be longer that 3 letters"/>}
+
 			<div className={classes['input-title']}>Tags</div>
 			<TagsBar tagsArr={tagsArr} marginBottom onClick={onDeleteTag}/>
 			<TagInput
