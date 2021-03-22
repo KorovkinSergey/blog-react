@@ -9,6 +9,7 @@ import {Input} from '../formInputs'
 
 import classes from './Profile.module.sass'
 import {updateUser} from '../../redux/actions/actionLogin'
+import FormErrorMessage from '../FormErrorMessage'
 
 function Profile({
 									 username,
@@ -23,19 +24,16 @@ function Profile({
 									 imageError,
 									 image,
 								 }) {
-	const {register, handleSubmit} = useForm()
+	const {register, handleSubmit, errors} = useForm()
+	const regEmail =  /^([a-z0-9_-]+)@([a-z0-9_-]+)\.([a-z]{2,6})$/
+	const regUrl = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g
+
 
 	const [emailInput, setEmailInput] = useState(email)
-	const [emailErrorMessage, setEmailErrorMessage] = useState('')
-
 	const [usernameInput, setUsernameInput] = useState(username)
-	const [usernameErrorMessage, setUsernameErrorMessage] = useState('')
-
 	const [imageInput, setImageInput] = useState(image)
-	const [imageInputErrorMessage, setImageInputErrorMessage] = useState('')
 
 	const [passwordInput, setPasswordInput] = useState('')
-	const [passwordErrorMessage, setPasswordErrorMessage] = useState('')
 
 	const [isProfileEdit, setIsProfileEdit] = useState(true)
 
@@ -44,48 +42,14 @@ function Profile({
 	}
 
 	const onSubmit = (data) => {
-		const isEmail = emailInput.includes('@', 0)
-		if (isEmail === false) {
-			setEmailErrorMessage('email should contain "@"')
-			return
-		}
-		if (isEmail === true) setEmailErrorMessage('')
-
-		const validUserName = usernameInput.length > 2 && usernameInput.length < 21
-		if (validUserName === false) {
-			setUsernameErrorMessage('username should be from 3 to 20 letters')
-			return
-		}
-		if (validUserName !== false) {
-			setUsernameErrorMessage('')
-		}
-
-		const validImage = imageInput.length > 5 || imageInput.length === 0
-		if (validImage === false) {
-			setImageInputErrorMessage('it is too short URL')
-			return
-		}
-		if (validImage === true) setImageInputErrorMessage('')
-
-
-		const isPasswordValid = (passwordInput.length > 7 && passwordInput.length < 41) || passwordInput.length === 0
-		if (isPasswordValid === false) {
-			setPasswordErrorMessage('password must be from 8 to 40 letters')
-			return
-		}
-		if (isPasswordValid === true) {
-			setPasswordErrorMessage('')
-		}
 
 		for (const key in data) {
 			if (data[key].length === 0) delete data[key]
 		}
-
 		if (emailInput === email && usernameInput === username && passwordInput.length === 0 && imageInput === image) {
 			setIsProfileEdit(false)
 			return
 		}
-
 		setNewUserData(data)
 	}
 
@@ -101,21 +65,24 @@ function Profile({
 				maxLength="20"
 				placeholder=""
 				onInput={setUsernameInput}
-				errorMessage={usernameError || usernameErrorMessage}
-				ref={register}
+				errorMessage={usernameError}
+				ref={register({required: true, minLength: 3, maxLength: 20})}
 			/>
+			{errors.username && <FormErrorMessage serverError="username should be from 3 to 20 letters"/>}
+
 			<div className={['input-title']}>Email address</div>
 			<Input
 				name="email"
 				type="email"
 				minLength="3"
 				placeholder="Email"
-				ref={register}
+				ref={register({required: true, pattern: regEmail})}
 				required
 				value={emailInput}
-				errorMessage={emailError || emailErrorMessage}
+				errorMessage={emailError}
 				onInput={setEmailInput}
 			/>
+			{errors.email && <FormErrorMessage serverError="Error email"/>}
 			<div className={classes['input-title']}>New password</div>
 			<Input
 				name="password"
@@ -124,10 +91,11 @@ function Profile({
 				maxLength="40"
 				placeholder="Password"
 				value={passwordInput}
-				errorMessage={passwordError || passwordErrorMessage}
+				errorMessage={passwordError}
 				onInput={setPasswordInput}
-				ref={register}
+				ref={register({minLength: 6, maxLength: 20})}
 			/>
+			{errors.password && <FormErrorMessage serverError="password must be from 6 to 20 letters"/>}
 
 			<div className={classes['input-title']}>Avatar image (url)</div>
 			<Input
@@ -135,12 +103,12 @@ function Profile({
 				type="text"
 				minLength="3"
 				placeholder="Avatar URL"
-				ref={register}
+				ref={register({required: true, pattern: regUrl})}
 				value={imageInput}
-				errorMessage={imageError || imageInputErrorMessage}
+				errorMessage={imageError}
 				onInput={setImageInput}
 			/>
-
+			{errors.image && <FormErrorMessage serverError="Invalid url"/>}
 			<Button submit style={['wide', 'blue', 'margin-bottom']} disabled={isFetching} loading={isFetching}>
 				Save
 			</Button>
