@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -11,39 +11,31 @@ import FormErrorMessage from '../FormErrorMessage'
 
 import {Input} from '../formInputs'
 import {singIn} from '../../redux/actions/actionLogin'
+import {defaultError} from '../../redux/actions/actionErrors'
 
-function SingInForm({singIn, isLoggin, history, isFetching, emailOrPasswordInvalid}) {
-	const {register, handleSubmit} = useForm()
+function SingInForm({singIn, isLoggin, history, isFetching,defaultError, emailOrPasswordInvalid}) {
+
+	useEffect(() => defaultError(),[defaultError])
+
+
+	const {register, handleSubmit, errors, reset} = useForm()
 
 	const [emailInput, setEmailInput] = useState('')
-	const [emailErrorMessage, setEmailErrorMessage] = useState('')
-
 	const [passwordInput, setPasswordInput] = useState('')
-	const [passwordErrorMessage, setPasswordErrorMessage] = useState('')
+	const reg = /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:com|coop|edu|gov|info|ru|jobs|mil|mobi|museum|name|net|[a-z][a-z])$/
+
+	useEffect(() => {
+		reset()
+	}, [reset,emailInput, passwordInput])
 
 	if (isLoggin) {
 		history.push('/articles/page/1')
-		return null // ?? это не проблема??
+		return null
 	}
 
+
+
 	const onSubmit = (data) => {
-		const isEmail = emailInput.includes('@', 0)
-
-		if (isEmail === false) {
-			setEmailErrorMessage('email should contain "@"')
-			return
-		}
-		if (isEmail === true) setEmailErrorMessage('')
-
-		const isPasswordValid = passwordInput.length > 7 && passwordInput.length < 41
-		if (isPasswordValid === false) {
-			setPasswordErrorMessage('password must be from 8 to 40 letters')
-			return
-		}
-		if (isPasswordValid === true) {
-			setPasswordErrorMessage('')
-		}
-
 		const newUserObj = {
 			email: data.email,
 			password: data.password,
@@ -60,25 +52,27 @@ function SingInForm({singIn, isLoggin, history, isFetching, emailOrPasswordInval
 				type="email"
 				minLength="3"
 				placeholder="Email"
-				ref={register}
+				ref={register({required: true, pattern: reg})}
 				required
 				value={emailInput}
-				errorMessage={emailErrorMessage}
 				onInput={setEmailInput}
 			/>
+			{errors.email && <FormErrorMessage serverError="Error email"/>}
+
 			<div className={classes['input-title']}>Password</div>
 			<Input
 				name="password"
 				type="password"
-				minLength="8"
-				maxLength="40"
+				minLength="6"
+				maxLength="20"
 				placeholder="Password"
 				value={passwordInput}
-				errorMessage={passwordErrorMessage}
 				onInput={setPasswordInput}
-				ref={register}
 				required
+				ref={register({required: true, minLength: 6, maxLength: 20})}
 			/>
+			{errors.password && <FormErrorMessage serverError="password must be from 6 to 20 letters"/>}
+
 			<Button submit style={['wide', 'blue', 'margin-bottom']} disabled={isFetching} loading={isFetching}>
 				Login
 			</Button>
@@ -96,22 +90,21 @@ SingInForm.propTypes = {
 	history: PropTypes.object.isRequired,
 	isFetching: PropTypes.bool.isRequired,
 	emailOrPasswordInvalid: PropTypes.bool.isRequired,
+	defaultError:PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
 	const props = {
 		isLoggin: state.user.isLoggin,
 		isFetching: state.user.isLogginFetching,
-		emailOrPasswordInvalid: false,
+		emailOrPasswordInvalid: !!state.user.errors['email or password'],
 	}
-
-	if (state.user.errors) props.emailOrPasswordInvalid = true
-
 	return props
 }
 
 const mapDispatchToProps = dispatch => ({
-	singIn: user => dispatch(singIn(user))
+	singIn: user => dispatch(singIn(user)),
+	defaultError: () => dispatch(defaultError())
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingInForm))

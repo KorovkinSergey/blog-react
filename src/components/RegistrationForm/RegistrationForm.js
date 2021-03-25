@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {useForm} from 'react-hook-form'
@@ -10,30 +10,36 @@ import {Input} from '../formInputs'
 import classes from './RegistrationForm.module.sass'
 import {singUp} from '../../redux/actions/actionLogin'
 import FormErrorMessage from '../FormErrorMessage'
+import {defaultError} from '../../redux/actions/actionErrors'
 
-function RegistrationForm({singUp, usernameError, emailError, passwordError, isFetching, isLoggin, history}) {
+function RegistrationForm({singUp, usernameError, emailError, passwordError,defaultError, isFetching, isLoggin, history}) {
+
+	useEffect(() =>  defaultError(),[defaultError])
+
+	const {register, handleSubmit, errors, reset} = useForm()
 
 	const [usernameInput, setUsernameInput] = useState('')
 	const [emailInput, setEmailInput] = useState('')
 	const [passwordInput, setPasswordInput] = useState('')
 	const [confirmPasswordInput, setConfirmPasswordInput] = useState('')
+
 	const [confirmError, setConfirmError] = useState('')
 
-	const {register, handleSubmit, errors} = useForm()
 
 	const reg = /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:com|coop|edu|gov|info|ru|jobs|mil|mobi|museum|name|net|[a-z][a-z])$/
 
 	if (isLoggin) history.push('/articles/page/1')
 
-	const onSubmit = (data) => {
+	useEffect(() => {
+		reset()
+	}, [reset,emailInput, passwordInput, confirmPasswordInput, usernameInput])
 
+	const onSubmit = (data) => {
 		if (passwordInput !== confirmPasswordInput) {
 			setConfirmError('passwords are not match')
 			return
 		}
-
 		setConfirmError('')
-
 		const newUserObj = {
 			username: data.username,
 			email: data.email,
@@ -120,6 +126,7 @@ RegistrationForm.propTypes = {
 	isFetching: PropTypes.bool.isRequired,
 	isLoggin: PropTypes.bool,
 	history: PropTypes.object.isRequired,
+	defaultError:PropTypes.func.isRequired,
 }
 
 RegistrationForm.defaultProps = {
@@ -138,7 +145,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	singUp: (user) => dispatch(singUp(user))
+	singUp: (user) => dispatch(singUp(user)),
+	defaultError: () => dispatch(defaultError())
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RegistrationForm))

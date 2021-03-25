@@ -19,7 +19,7 @@ const Input = React.forwardRef(
 				className={classNames(classes.input, errorMessage ? classes['input-invalid'] : null)}
 				placeholder={placeholder}
 				ref={ref}
-				onInput={e => onInput(e.target.value)}
+				onChange={e => onInput(e.target.value)}
 				value={value}
 			/>
 			{errorMessage && <FormErrorMessage serverError={errorMessage}/>}

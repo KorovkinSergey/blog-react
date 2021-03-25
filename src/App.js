@@ -32,7 +32,7 @@ function App({getArticles, singInWithToken, isLoggin}) {
 			<Main>
 				<Switch>
 					<Redirect exact from="/" to="/articles/page/1"/>
-					<Route exact path="/sing-in" component={SingIn}/>
+					<Route exact path="/sign-in" component={SingIn}/>
 					<Route
 						exact
 						path="/articles/page/:id"
@@ -51,10 +51,10 @@ function App({getArticles, singInWithToken, isLoggin}) {
 							return <ArticleItemWithService id={id}/>
 						}}
 					/>
-					<Route exact path="/sing-up" component={RegistrationForm}/>
+					<Route exact path="/sign-up" component={RegistrationForm}/>
 
 					<PrivateRoute exact path="/new-article" render={() => {
-						if (isLoggin === false && token === '') return <Redirect to="/sing-in"/>
+						if (isLoggin === false && token === '') return <Redirect to="/sign-in"/>
 
 						return <NewArticle/>
 					}}/>

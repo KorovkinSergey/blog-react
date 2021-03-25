@@ -1,6 +1,7 @@
 import setTokenToLocaleStorage from '../../localStorage/setTokenToLocaleStorage'
 import setUsernameToLocaleStorage from '../../localStorage/setUsernameToLocaleStorage'
 import {
+	DEFAULT_ERROR,
 	LOG_OUT,
 	LOGIN_IS_FETCHING_OFF,
 	LOGIN_IS_FETCHING_ON,
@@ -19,7 +20,6 @@ const initialState = {
 		password: [''],
 		username: ['']
 	}
-
 }
 
 function reduceLogging(state = initialState, action) {
@@ -36,6 +36,7 @@ function reduceLogging(state = initialState, action) {
 			}
 		case SING_UP:
 			return {
+				...state,
 				...action.user,
 				isLoggin: action.user.errors === undefined,
 				isLogginFetching: false,
@@ -43,7 +44,7 @@ function reduceLogging(state = initialState, action) {
 		case SING_IN:
 			return {
 				...state,
-				...action.user,
+				errors:{...state.errors,...action.user.errors},
 				isLoggin: action.user.errors === undefined,
 				isLogginFetching: false,
 			}
@@ -60,14 +61,12 @@ function reduceLogging(state = initialState, action) {
 				errors: action.errors,
 				isLogginFetching: false,
 			}
+		case DEFAULT_ERROR:
+			return {...state, errors: initialState.errors}
 		case LOG_OUT:
 			setUsernameToLocaleStorage('')
 			setTokenToLocaleStorage('')
-			return {
-				user: {},
-				isLoggin: false,
-				isLogginFetching: false,
-			}
+			return {...initialState}
 		default:
 			return state
 	}

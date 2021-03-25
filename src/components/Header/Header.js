@@ -43,10 +43,10 @@ function Header({isLoggin, userName, imgUrl, logOut}) {
 
 				{!isLoggin && (
 					<>
-						<Link to="/sing-in">
+						<Link to="/sign-in">
 							<Button>Sing In</Button>
 						</Link>
-						<Link to="/sing-up">
+						<Link to="/sign-up">
 							<Button style={['outlined', 'green']}>Sing Up</Button>
 						</Link>
 					</>
