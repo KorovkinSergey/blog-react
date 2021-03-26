@@ -6,13 +6,13 @@ import {Redirect} from 'react-router'
 import {useForm} from 'react-hook-form'
 
 import classNames from 'classnames'
-import classes from './SingInForm.module.sass'
+import classes from './SignInForm.module.sass'
 
 import FormErrorMessage from '../FormErrorMessage'
 import {singIn} from '../../redux/actions/actionLogin'
 import {defaultError} from '../../redux/actions/actionErrors'
 
-function SingInForm({singIn, isLoggin, isFetching, defaultError, emailOrPasswordInvalid}) {
+function SignInForm({singIn, isLoggin, isFetching, defaultError, emailOrPasswordInvalid}) {
 
 	useEffect(() => defaultError(), [defaultError])
 
@@ -66,7 +66,7 @@ function SingInForm({singIn, isLoggin, isFetching, defaultError, emailOrPassword
 	)
 }
 
-SingInForm.propTypes = {
+SignInForm.propTypes = {
 	singIn: PropTypes.func.isRequired,
 	isLoggin: PropTypes.bool.isRequired,
 	isFetching: PropTypes.bool.isRequired,
@@ -85,4 +85,4 @@ const mapDispatchToProps = dispatch => ({
 	defaultError: () => dispatch(defaultError())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingInForm)
+export default connect(mapStateToProps, mapDispatchToProps)(SignInForm)
