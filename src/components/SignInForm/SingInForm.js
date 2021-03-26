@@ -60,7 +60,7 @@ function SingInForm({singIn, isLoggin, isFetching, defaultError, emailOrPassword
 			</button>
 			{emailOrPasswordInvalid && <FormErrorMessage serverError="email or password is invalid"/>}
 			<div className={classes['sing-up']}>
-				Don’t have an account? <Link to="/sing-up">Sign Up.</Link>
+				Don’t have an account? <Link to="/sign-up">Sign Up.</Link>
 			</div>
 		</form>
 	)
