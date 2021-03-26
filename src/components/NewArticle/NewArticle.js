@@ -12,20 +12,21 @@ import {clearJustCreateArticle, createArticle, updateArticle} from '../../redux/
 import FormErrorMessage from '../FormErrorMessage'
 
 
-function NewArticle({
-											id,
-											articleTitle,
-											articleDescription,
-											articleBody,
-											title,
-											createArticle,
-											updateArticle,
-											loading,
-											justCreatedArticle,
-											clearJustCreateArticle,
-											history,
-											articleTagList,
-										}) {
+function NewArticle(
+	{
+		id,
+		articleTitle,
+		articleDescription,
+		articleBody,
+		title,
+		createArticle,
+		updateArticle,
+		loading,
+		justCreatedArticle,
+		clearJustCreateArticle,
+		history,
+		articleTagList,
+	}) {
 
 	const {register, handleSubmit, errors} = useForm()
 

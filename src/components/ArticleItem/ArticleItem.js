@@ -18,22 +18,23 @@ import {deleteArticle} from '../../redux/actions/actionArticles'
 
 const text = 'Are you sure to delete this task?'
 
-function ArticleItem({
-											 title,
-											 likesCount,
-											 tags,
-											 username,
-											 publishDate,
-											 avatarUrl,
-											 description,
-											 body,
-											 id,
-											 logginUsername,
-											 favorited,
-											 deleteOneArticle,
-											 isLoggin,
-											 edit
-										 }) {
+function ArticleItem(
+	{
+		title,
+		likesCount,
+		tags,
+		username,
+		publishDate,
+		avatarUrl,
+		description,
+		body,
+		id,
+		logginUsername,
+		favorited,
+		deleteOneArticle,
+		isLoggin,
+		edit
+	}) {
 	const [isActive, setActive] = useState(false)
 	const [isLiked, setLiked] = useState(favorited)
 	const [likesCountState, setLikesCountState] = useState(likesCount)
@@ -122,7 +123,7 @@ function ArticleItem({
 						<Popconfirm placement="rightTop" title={text} onConfirm={confirm} okText="Yes" cancelText="No">
 							<button
 								type='button'
-								className={classNames(classes.button,classes.red)}
+								className={classNames(classes.button, classes.red)}
 							>Delete
 							</button>
 						</Popconfirm>
@@ -130,7 +131,7 @@ function ArticleItem({
 						<Link to={`/article/${id}/edit`}>
 							<button
 								type='button'
-								className={classNames(classes.button,classes.green)}
+								className={classNames(classes.button, classes.green)}
 							>
 								Edit
 							</button>
@@ -159,7 +160,7 @@ ArticleItem.propTypes = {
 	deleteOneArticle: PropTypes.func.isRequired,
 	isLoggin: PropTypes.bool.isRequired,
 	favorited: PropTypes.bool.isRequired,
-	edit:PropTypes.bool
+	edit: PropTypes.bool
 }
 
 ArticleItem.defaultProps = {
@@ -173,7 +174,7 @@ ArticleItem.defaultProps = {
 	body: 'body',
 	id: 'id',
 	logginUsername: '',
-	edit:false
+	edit: false
 }
 
 const mapStateToProps = (state) => ({

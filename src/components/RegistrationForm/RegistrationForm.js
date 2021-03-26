@@ -11,15 +11,7 @@ import {singUp} from '../../redux/actions/actionLogin'
 import FormErrorMessage from '../FormErrorMessage'
 import {defaultError} from '../../redux/actions/actionErrors'
 
-function RegistrationForm({
-														singUp,
-														usernameError,
-														emailError,
-														passwordError,
-														defaultError,
-														isFetching,
-														isLoggin,
-													}) {
+function RegistrationForm({singUp, usernameError, emailError, passwordError, defaultError, isFetching, isLoggin,}) {
 
 	useEffect(() => defaultError(), [defaultError])
 
@@ -27,7 +19,7 @@ function RegistrationForm({
 
 	const [confirmError, setConfirmError] = useState('')
 
-	const reg = /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:com|coop|edu|gov|info|ru|jobs|mil|mobi|museum|name|net|[a-z][a-z])$/
+	const reg = /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:com|ru|jobs|mil|mobi|museum|name|net|[a-z][a-z])$/
 
 	if (isLoggin) {
 		return <Redirect to='/articles/page/1'/>

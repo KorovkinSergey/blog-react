@@ -10,18 +10,19 @@ import classes from './Profile.module.sass'
 import {updateUser} from '../../redux/actions/actionLogin'
 import FormErrorMessage from '../FormErrorMessage'
 
-function Profile({
-									 username,
-									 email,
-									 isLoggin,
-									 setNewUserData,
-									 isFetching,
-									 usernameError,
-									 emailError,
-									 passwordError,
-									 imageError,
-									 image,
-								 }) {
+function Profile(
+	{
+		username,
+		email,
+		isLoggin,
+		setNewUserData,
+		isFetching,
+		usernameError,
+		emailError,
+		passwordError,
+		imageError,
+		image,
+	}) {
 	const {register, handleSubmit, errors} = useForm()
 	const regEmail = /^([a-z0-9_-]+)@([a-z0-9_-]+)\.([a-z]{2,6})$/
 
