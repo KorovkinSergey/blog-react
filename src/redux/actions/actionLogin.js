@@ -71,7 +71,6 @@ export function singInWithToken() {
 export function updateUser(userObj) {
 	return async dispatch => {
 		dispatch(isLogginFetchingOn())
-
 		try {
 			const result = await realWorldService.updateUser(userObj)
 			const action = {
@@ -80,7 +79,6 @@ export function updateUser(userObj) {
 			}
 			if (result.errors) action.errors = result.errors
 			if (!result.errors) action.user = {...result}
-
 			dispatch(action)
 		} catch (e) {
 			dispatch(isLogginFetchingOff())

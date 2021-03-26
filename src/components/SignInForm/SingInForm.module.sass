@@ -16,7 +16,6 @@
     line-height: 28px
     color: $text-color-black
     margin-bottom: 21px
-
 .input
     border: 1px solid #D9D9D9
     border-radius: 4px
@@ -51,15 +50,19 @@
         height: 46px
         margin-right: 17px
 
-hr
-    margin-top: 9px
-    margin-bottom: 8px
-    background-color: $text-color-gray-placeholder
-    border: 0.5px solid $text-color-gray-placeholder
+.input-title
+    font-size: 14px
+    line-height: 22px
+    color: $text-color-black
+    text-align: left
+    margin-bottom: 2px
 
-.sing-in
+.sing-up
     color: $text-color-sing-in
     text-align: center
+
+.error
+    color: #ff0000
 .button
     margin: 0
     padding: 6px 18px 10px
@@ -71,14 +74,13 @@ hr
     margin-right: 20px
     position: relative
     overflow: hidden
-    width: 100%
-    margin-bottom: 8px
     transition: background 400ms
     box-shadow: 0 0 0.5rem -2px rgba(0, 0, 0, 0.3)
+    width: 100%
+    margin-bottom: 8px
     border-color: $blue
     background-color: $blue
     color: $text-color-white
-
     &:active
         box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7)
         border-color: $blue
@@ -89,13 +91,3 @@ hr
     &:disabled
         background-color: $text-color-sing-in
         cursor: auto
-.wide
-    width: 100%
-.margin-bottom
-    margin-bottom: 8px
-.blue
-    border-color: $blue
-    background-color: $blue
-    color: $text-color-white
-    &:active
-        border-color: $blue

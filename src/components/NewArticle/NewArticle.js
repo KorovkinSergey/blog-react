@@ -4,14 +4,12 @@ import {useForm} from 'react-hook-form'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router'
 
-import {TextArea, TagInput, Input} from '../formInputs'
-import Button from '../Button'
-import TagsBar from '../TagsBar'
+import classNames from 'classnames'
 
+import TagsBar from '../TagsBar'
 import classes from './NewArticle.module.sass'
 import {clearJustCreateArticle, createArticle, updateArticle} from '../../redux/actions/actionArticles'
 import FormErrorMessage from '../FormErrorMessage'
-
 
 
 function NewArticle({
@@ -31,11 +29,6 @@ function NewArticle({
 
 	const {register, handleSubmit, errors} = useForm()
 
-	const [inputTitle, setInputTitle] = useState(articleTitle)
-
-	const [inputDescription, setInputDescription] = useState(articleDescription)
-
-	const [inputBody, setInputBody] = useState(articleBody)
 
 	const [inputTag, setInputTag] = useState('')
 
@@ -84,58 +77,74 @@ function NewArticle({
 		<form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
 			<div className={classes.title}>{title}</div>
 			<div className={classes['input-title']}>Title</div>
-			<Input
+			<input
 				name="title"
-				placeholder="Tilte"
-				required
-				value={inputTitle}
+				placeholder="Title"
 				type="text"
-				minLength="0"
-				onInput={setInputTitle}
-				ref={register({required: true, minLength:3})}
+				defaultValue={articleTitle}
+				className={classNames(classes.input, errors.title ? classes['input-invalid'] : null)}
+				ref={register({required: true, minLength: 3})}
 			/>
 			{errors.title && <FormErrorMessage serverError="title must be longer than 3 letters"/>}
 
 			<div className={classes['input-title']}>Short description</div>
-			<Input
+			<input
 				name="description"
 				placeholder="Short description"
-				required
-				value={inputDescription}
 				type="text"
-				minLength="0"
-				onInput={setInputDescription}
-				ref={register({required: true, minLength:3})}
+				defaultValue={articleDescription}
+				className={classNames(classes.input, errors.description ? classes['input-invalid'] : null)}
+				ref={register({required: true, minLength: 3})}
 			/>
 			{errors.description && <FormErrorMessage serverError="description must be longer that 3 letters"/>}
 
 			<div className={classes['input-title']}>Text</div>
-			<TextArea
+			<textarea
 				name="body"
+				rows="8"
+				defaultValue={articleBody}
 				placeholder="Text"
-				required
-				ref={register({required: true, minLength:3})}
-				value={inputBody}
-				minLength="1"
-				onInput={setInputBody}
+				className={classNames(classes.input, errors.body ? classes['input-invalid'] : null)}
+				ref={register({required: true, minLength: 3})}
 			/>
 			{errors.body && <FormErrorMessage serverError="article must be longer that 3 letters"/>}
 
 			<div className={classes['input-title']}>Tags</div>
 			<TagsBar tagsArr={tagsArr} marginBottom onClick={onDeleteTag}/>
-			<TagInput
-				onAdd={onAddTag}
-				onDelete={() => {
-				}}
-				value={inputTag}
-				onInput={(text) => {
-					setInputTag(text)
-				}}
-				errorMessage={tagError}
-			/>
-			<Button submit style={['blue', 'half-wide']} loading={loading} disabled={loading}>
-				Send
-			</Button>
+			<div className={classes['tag-wrapper']}>
+				<div className={classes['tag-input-wrapper']}>
+					<input
+						autoComplete="off"
+						name="tag"
+						type="text"
+						className={classNames(classes.input, classes['input-tag'])}
+						placeholder="Tag"
+						onChange={e => setInputTag(e.target.value)}
+						value={inputTag}
+						onKeyDown={(e) => {
+							if (e.code === 'Enter') {
+								e.preventDefault()
+								onAddTag()
+							}
+						}}
+					/>
+					{tagError && <FormErrorMessage serverError={tagError}/>}
+				</div>
+				<button
+					type='button'
+					className={classes.blue}
+					onClick={onAddTag}>
+					Add tag
+				</button>
+			</div>
+
+			<button
+				type='submit'
+				className={classNames(classes.button)}
+				disabled={loading}
+			>
+				{loading ? 'loading' : 'Send'}
+			</button>
 		</form>
 	)
 }

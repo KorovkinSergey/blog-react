@@ -24,7 +24,7 @@
     font-weight: 400
     font-size: 16px
     line-height: 24px
-    color: $text-color-gray-placeholder
+    color: $text-color-black
     margin-bottom: 12px
     width: 100%
     &:last-of-type
@@ -83,3 +83,31 @@
 
 .error
     color: #ff0000
+.button
+    margin: 0
+    padding: 6px 18px 10px
+    font-size: 18px
+    line-height: 28px
+    cursor: pointer
+    border: none
+    border-radius: 5px
+    margin-right: 20px
+    position: relative
+    overflow: hidden
+    transition: background 400ms
+    box-shadow: 0 0 0.5rem -2px rgba(0, 0, 0, 0.3)
+    width: 100%
+    margin-bottom: 8px
+    border-color: $blue
+    background-color: $blue
+    color: $text-color-white
+    &:active
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7)
+        border-color: $blue
+    &:focus
+        outline: 1px solid rgba(0, 0, 0, 0.5)
+        outline-offset: 2px
+        outline-style: auto
+    &:disabled
+        background-color: $text-color-sing-in
+        cursor: auto

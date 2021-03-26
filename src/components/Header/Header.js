@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import classNames from 'classnames'
 import deleteUserfromLocaleStorage from '../../localStorage/deleteUserfromLocaleStorage'
 
-import Button from '../Button'
 import avatar from '../../img/avatar.png'
 
 import classes from './Header.module.sass'
@@ -27,7 +27,11 @@ function Header({isLoggin, userName, imgUrl, logOut}) {
 				{isLoggin && (
 					<>
 						<Link to="/new-article">
-							<Button style={['outlined', 'green', 'small', 'margin-right']}>Create article</Button>
+							<button
+								type='button'
+								className={classNames(classes.button,classes.small)}>
+								Create article
+							</button>
 						</Link>
 						<div className={classes.username}>{userName}</div>
 						<Link to="/profile">
@@ -35,19 +39,28 @@ function Header({isLoggin, userName, imgUrl, logOut}) {
 								<img src={img} alt="avatar"/>
 							</div>
 						</Link>
-						<Button style={['outlined']} onClick={loggingOut}>
+						<button
+							type='button'
+							className={classNames(classes.button,classes.outlined)}
+							onClick={loggingOut}>
 							Log Out
-						</Button>
+						</button>
 					</>
 				)}
 
 				{!isLoggin && (
 					<>
 						<Link to="/sign-in">
-							<Button>Sing In</Button>
+							<button
+								type='button'
+								className={classNames(classes.button,classes.outlined)}
+							>Sign In</button>
 						</Link>
 						<Link to="/sign-up">
-							<Button style={['outlined', 'green']}>Sing Up</Button>
+							<button
+								type='button'
+								className={classNames(classes.button,classes.outlined,classes.green)}
+							>Sign Up</button>
 						</Link>
 					</>
 				)}

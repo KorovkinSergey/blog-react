@@ -9,7 +9,6 @@ import classNames from 'classnames'
 import {Popconfirm /* message */} from 'antd'
 
 import realWorldService from '../../API/RealWorldService'
-import Button from '../Button'
 
 import TagsBar from '../TagsBar'
 
@@ -121,11 +120,20 @@ function ArticleItem({
 				{username === logginUsername && edit && (
 					<div className={classes.wrapper}>
 						<Popconfirm placement="rightTop" title={text} onConfirm={confirm} okText="Yes" cancelText="No">
-							<Button style={['outlined', 'red']}>Delete</Button>
+							<button
+								type='button'
+								className={classNames(classes.button,classes.red)}
+							>Delete
+							</button>
 						</Popconfirm>
 
 						<Link to={`/article/${id}/edit`}>
-							<Button style={['outlined', 'green']}>Edit</Button>
+							<button
+								type='button'
+								className={classNames(classes.button,classes.green)}
+							>
+								Edit
+							</button>
 						</Link>
 					</div>
 				)}

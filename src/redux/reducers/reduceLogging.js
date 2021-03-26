@@ -44,12 +44,13 @@ function reduceLogging(state = initialState, action) {
 		case SING_IN:
 			return {
 				...state,
-				errors:{...state.errors,...action.user.errors},
+				errors: {...state.errors, ...action.user.errors},
 				isLoggin: action.user.errors === undefined,
 				isLogginFetching: false,
 			}
 		case SING_IN_WITH_TOKEN:
 			return {
+				...state,
 				...action.user,
 				isLoggin: action.user.errors === undefined,
 				isLogginFetching: false,
@@ -58,7 +59,7 @@ function reduceLogging(state = initialState, action) {
 			return {
 				...state,
 				...action.user,
-				errors: action.errors,
+				errors: {...initialState.errors, ...action.errors},
 				isLogginFetching: false,
 			}
 		case DEFAULT_ERROR:

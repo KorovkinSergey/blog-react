@@ -10,3 +10,109 @@
 
 .input-title
     @include input-title
+.input
+    border: 1px solid #D9D9D9
+    border-radius: 4px
+    padding: 8px 12px
+    font-weight: 400
+    font-size: 16px
+    line-height: 24px
+    color: $text-color-black
+    margin-bottom: 12px
+    width: 100%
+    &-title
+        font-size: 14px
+        line-height: 22px
+        color: $text-color-black
+        text-align: left
+        margin-bottom: 2px
+    &::placeholder
+        color: $text-color-gray-placeholder
+    &:last-of-type
+        margin-bottom: 21px
+    &-title
+        font-size: 14px
+        line-height: 22px
+        color: $text-color-black
+        text-align: left
+        margin-bottom: 2px
+    &-invalid
+        outline: none
+        border: 2px solid red
+    &-tag
+        max-width: 300px
+        height: 46px
+        margin-right: 17px
+.button
+    margin: 0
+    padding: 6px 18px 10px
+    font-size: 18px
+    line-height: 28px
+    cursor: pointer
+    border: none
+    border-radius: 5px
+    margin-right: 20px
+    position: relative
+    overflow: hidden
+    transition: background 400ms
+    box-shadow: 0 0 0.5rem -2px rgba(0, 0, 0, 0.3)
+    border-color: $blue
+    background-color: $blue
+    color: $text-color-white
+    max-width: 100%
+    min-width: 319px
+    &:active
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7)
+        border-color: $blue
+    &:focus
+        outline: 1px solid rgba(0, 0, 0, 0.5)
+        outline-offset: 2px
+        outline-style: auto
+    &:disabled
+        background-color: $text-color-sing-in
+        cursor: auto
+.tag-wrapper
+    display: flex
+    align-items: flex-start
+
+.tag-input-wrapper
+    display: flex
+    flex-direction: column
+    justify-content: flex-start
+    align-items: flex-start
+    margin-right: 20px
+
+.checkbox-label
+    width: 100%
+    position: relative
+    &>p
+        padding-left: 24px
+        font-weight: normal
+        font-size: 14px
+        line-height: 22px
+        color: $text-color-checkbox
+.blue
+    margin: 0
+    font-size: 18px
+    line-height: 28px
+    cursor: pointer
+    border-radius: 5px
+    margin-right: 20px
+    position: relative
+    overflow: hidden
+    transition: background 400ms
+    box-shadow: 0 0 0.5rem -2px rgba(0, 0, 0, 0.3)
+    border-width: 1px
+    border-style: solid
+    background-color: transparent
+    color: $blue
+    padding: 8px 36px
+    &:active
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7)
+    &:focus
+        outline: 1px solid rgba(0, 0, 0, 0.5)
+        outline-offset: 2px
+        outline-style: auto
+    &:disabled
+        background-color: $text-color-sing-in
+        cursor: auto
